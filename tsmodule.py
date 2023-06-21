@@ -38,6 +38,7 @@ from dataframe_pdf import *
 from itertools import product
 import os
 
+
 class Preprocessing:
 
     def __init__(self, start_date, end_date, delimiter=',', date_col='Date', data_freq='15min', impute_method='ffill'):
@@ -207,9 +208,9 @@ class ParameterEstimation:
         # Pass the dataframe to the adfuller method provided by statsmodels module
         adf_test = adfuller(df)
         # Store results of adfuller test in variables
-        self.adf_value = adf_test[0]
+        self.adf_value = round(adf_test[0], 2)
         self.p_value = adf_test[1]
-        self.critical_value = adf_test[4]['5%']
+        self.critical_value = round(adf_test[4]['5%'], 2)
 
     # This simply adds a row to the df_stationarity dataframe which just stores the results of the stationarity_check
     #   and lists what the diff_dict contains
