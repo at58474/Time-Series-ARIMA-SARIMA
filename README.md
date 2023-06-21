@@ -112,3 +112,62 @@ Classes that can be turned on or off
      - Must be an integer
 
 ### Parameter Estimation Parameters
+- lags: Ex.(50)
+     - Set this to the number of desired lags to be displayed in the ACF and PACF plots, it is an integer
+
+- seasonal_period: Ex.([8760, 8760, 8760, 1460, 1460, 1460, 730, 730, 730, 365, 365, 365])
+     - This is a list of integers that represents the seasonal trend, if any, for each time interval.
+     - Remember for each time interval, there are 3 resampling methods used so the number of items in this list will be equivalent to frequency_list * 3
+     - This is used for the decomposition plots, if the season length is unknown or does not exist any number can be put in here and seasonality can be ignored in the decomp plots
+ 
+### Model Fitting Parameters
+- testing_set_size: Ex.(50)
+     - This will determine the testing set size for the in-sample rolling and out-of-sample rolling forecasts. This is an integer
+- order_list_arima: Ex.<br><br>
+[(3, 0, 3, 0, 0, 0, 0),  # 'hourly 5 year'<br>
+ (3, 1, 1, 0, 0, 0, 0),  # 'hourly 5 year mean'<br>
+ (3, 0, 3, 0, 0, 0, 0),  # 'hourly 5 year max'<br>
+ (0, 2, 2, 0, 0, 0, 0),  # '6 hour 10 year'<br>
+ (0, 1, 1, 0, 0, 0, 0),  # '6 hour 10 year mean'<br>
+ (0, 2, 1, 0, 0, 0, 0),  # '6 hour 10 year max'<br>
+ (0, 1, 0, 0, 0, 0, 0),  # '12 hour 10 year'<br>
+ (1, 0, 3, 0, 0, 0, 0),  # '12 hour 10 year mean'<br>
+ (0, 1, 1, 0, 0, 0, 0),  # '12 hour 10 year max'<br>
+ (0, 1, 0, 0, 0, 0, 0),  # 'daily 10 year'<br>
+ (1, 0, 2, 0, 0, 0, 0),  # 'daily 10 year mean'<br>
+ (3, 0, 0, 0, 0, 0, 0)]  # 'daily 10 year max'<br><br>
+     - This is a list of tuples, (), and contain the ARIMA(p,d,q) parameters for each dataset, defined by running the above classes and/or the auto-ARIMA class
+     - Since this is for running the ARIMA model the last 4 parameters need to be 0.
+     - It is recommended to change the comments to represent the data intervals being used
+
+- order_list_sarima: Ex.<br><br>
+[(2, 1, 2, 1, 0, 2, 52),  # '7 day 10 year'<br>
+ (2, 1, 2, 1, 0, 2, 52),  # '7 day 10 year mean'<br>
+ (2, 1, 2, 1, 0, 2, 52),  # '7 day 10 year max'<br>
+ (1, 0, 1, 3, 0, 3, 26),  # '14 day 10 year'<br>
+ (1, 0, 1, 3, 0, 3, 26),  # '14 day 10 year mean'<br>
+ (1, 0, 1, 3, 0, 3, 26),  # '14 day 10 year max'<br>
+ (2, 0, 2, 3, 0, 3, 12),  # 'monthly 10 year'<br>
+ (2, 0, 2, 3, 0, 3, 12),  # 'monthly 10 year mean'<br>
+ (2, 0, 2, 3, 0, 3, 12)]  # 'monthly 10 year max'<br><br>
+     - Same as order_list_arima but this is for running the SARIMA(p,d,q)(P,D,Q,m) model and all 7 parameters need to be filled in
+ 
+### Cross Validation Parameters
+- groups: Ex.(5)
+     - This is the number of cross-validation groups that will be created for the in-sample rolling and out-of-sample rolling forecasts
+     - Important! Make sure there are enough rows in the dataframe, for example if groups is set to 5, and the parameter below, testing_set_size_cv is set to 10 then a minumum of 120 rows are required
+     - Code snippet for creating CV groups:<br>
+        self.training_start = 0<br>
+        self.training_end = int((len(df) / self.groups) * n)<br>
+        self.in_sample_start = self.training_end + 1<br>
+        self.in_sample_end = self.training_end + self.testing_set_size_cv<br>
+        self.out_of_sample_start = self.in_sample_end + 1<br>
+        self.out_of_sample_end = self.in_sample_end + self.testing_set_size_cv<br>
+- testing_set_size_cv: Ex.(10)
+     - Testing set size for each in-sample and out-of-sample cross validation group
+
+- keys: Ex.(['1H_mean', '6H_mean', '12H_mean', '1D_mean'])
+     - This is a list, [], of strings, '', that contain the key, from the dictionary df_dict_trun created by the module, for each dataframe that needs to be cross validated.
+     - The key is simply the 'time interval' + '_' + 'aggregation method', so for the 1 hour resampled dataset aggragated using the mean() function, the key would be '1H_mean'
+ 
+- order_list_trun_arima: Ex.<br><br>
