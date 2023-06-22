@@ -216,3 +216,32 @@ m = [0]
 - These are the lower and upper bounds for the order parameters of the ARIMA and SARIMA models
 - To run just ARIMA set the values for P,D,Q, and m to 0, set the values to run SARIMA
 - It is recommended to analyze the ACF and PACF plots, along with using the Box-Jenkins methodology and analyzing residual diagnostics to narrow the range here to reduce the time complexity of running the auto_ARIMA class
+
+
+## Directory Structure
+The results from running the tsmodule are stored in pdf and jpg files. The program organizes the files into the directory structure as described below to make them easily accessible. Once the program runs it is recommended to archive any of the needed files as they are subject to being overwriten or deleted. The files can be archived elsewhere, but a suggested folder structure is provided inside each of the folders below.
+
+- ##### plots/acf_pacf<br><br>
+ACF and PACF plot results for each time interval, contains 3 files for each interval which are the results from using first(), mean(), and max() resampling methods<br><br>
+- ##### plots/adfuller_results<br><br>
+Provides a table that summarizes the results from running the ADF test on each dataframe. Gives the p_value, adf_value, critical_value, and the number of times the dataset was differenced with the Pandas diff() method<br><br>
+- ##### plots/auto_arima_results<br><br>
+Table that provides the top 20 results from running the auto_arima class. Lists which model was used, interval, order (p,d,q)(P,D,Q,m), then AIC, RMSE, and MAPE evaluation metric results. Three files are created which sort the models by the following 3 methods: (AIC,MAPE,RMSE), (MAPE,AIC,RMSE), (RMSE,MAPE,AIC).<br><br>
+- ##### plots/cv_plots<br><br>
+Contains in-sample 1-step-ahead rolling and out-of-sample rolling forecast plots for each of the cross validation groups, for every time series specified in the configuration above.<br><br>
+- ##### plots/cv_results<br><br>
+Table that congregates all of the cross validaiton results in one place, gives RMSE and MAPE values for in-sample and out-of-sample results.<br><br>
+- ##### plots/decomposition<br><br>
+Decomposition plots that show the line plot for the data and plots showing trend, seasonal trend, and a plot of residuals. Plots for each time interval / resample method are created.<br><br>
+- ##### plots/diagnostic_plots<br>
+     - plots/diagnostic_plots/In-Sample Non-Rolling
+     - plots/diagnostic_plots/In-Sample Rolling
+     - plots/diagnostic_plots/Out-of-Sample Rolling<br><br>
+Creates diagnostic plots for each time interval / resample method for in-sample non-rolling, in-sample rolling, and out-of-sample rolling forecasts, organized into separate folders. Two versions are created: one using the plot_diagnostics() method provided by statsmodel package, and another containing a plot of the residuals, histogram, and a quantile-quantile plot. plot_diagnostics() provides all of these and an autocorrelation plot of the residuals.<br><br>
+- ##### plots/forecast_plots<br>
+     - plots/forecast_plots/In-Sample Non-Rolling
+     - plots/forecast_plots/In-Sample Rolling
+     - plots/forecast_plots/Out-of-Sample Rolling<br><br>
+Similar to the diagnostic_plots folder, this contains forecast results of each time interval/resample method for each of the forecasting methods.<br><br>
+- ##### plots/forecast_results<br><br>
+Contains 3 files showing forecast results for each forecasting method. Provides AIC, RMSE, and MAPE values.
