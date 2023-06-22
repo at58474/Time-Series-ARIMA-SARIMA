@@ -139,6 +139,7 @@ Classes that can be turned on or off
      - This is a list of tuples, (), and contain the ARIMA(p,d,q) parameters for each dataset, defined by running the above classes and/or the auto-ARIMA class
      - Since this is for running the ARIMA model the last 4 parameters need to be 0.
      - It is recommended to change the comments to represent the data intervals being used
+     - The number of tuples here should be frequency_list * 3
 
 - order_list_sarima: Ex.<br><br>
 [(2, 1, 2, 1, 0, 2, 52),  # '7 day 10 year'<br>
@@ -171,3 +172,47 @@ Classes that can be turned on or off
      - The key is simply the 'time interval' + '_' + 'aggregation method', so for the 1 hour resampled dataset aggragated using the mean() function, the key would be '1H_mean'
  
 - order_list_trun_arima: Ex.<br><br>
+[(3, 1, 2, 0, 0, 0, 0),  # 1H_mean<br>
+(0, 1, 1, 0, 0, 0, 0),  # 6H_mean<br>
+(1, 0, 3, 0, 0, 0, 0),  # 12H_mean<br>
+(1, 1, 0, 0, 0, 0, 0)]  # 1D_mean<br><br>
+     - List of tuples, (), which are the ARIMA(p,d,q) parameters for each of the values listed in the keys list above
+
+- order_list_trun_sarima: Ex.<br><br>
+[(2, 1, 2, 1, 0, 2, 52),   # 7D_mean
+(1, 0, 1, 3, 0, 3, 26),   # 14D_mean
+(2, 0, 2, 3, 0, 3, 12)]   # 1M_mean<br><br>
+     - List of tuples, (), corresponsing to the SARIMA(p,d,q)(P,D,Q,m) parameters for values in the keys list
+ 
+### Auto ARIMA Parameters
+- key: Ex.(['1D_max'])
+     - This is a 1 item list which is the key as described in the keys parameter above. This will run through each of the ARIMA or SARIMA paramater combinations defined by the order ranges below.
+     - Will only run 1 time series dataframe at a time
+
+#### ARIMA
+##### Non-Seasonal Autoregressive Order (p)
+- p_min: Ex.(0)
+- p_max: Ex.(3)
+##### Number of Non-Seasonal Differences (d)
+- d_min: Ex.(0)
+- d_max: Ex.(2)
+##### Non-Seasonal Moving Average Order (q)
+- q_min: Ex.(0)
+- q_max: Ex.(2)
+
+#### SARIMA
+##### Seasonal Autoregressive Order (P)
+- P_min: Ex.(0)
+- P_max: Ex.(0)
+##### Number of Seasonal Differences (D)
+- D_min: Ex.(0)
+- D_max: Ex.(0)
+##### Seasonal Moving Average Order (Q)
+- Q_min: Ex.(0)
+- Q_max: Ex.(0)
+##### Length of the Season (m)
+m = [0]
+
+- These are the lower and upper bounds for the order parameters of the ARIMA and SARIMA models
+- To run just ARIMA set the values for P,D,Q, and m to 0, set the values to run SARIMA
+- It is recommended to analyze the ACF and PACF plots, along with using the Box-Jenkins methodology and analyzing residual diagnostics to narrow the range here to reduce the time complexity of running the auto_ARIMA class
