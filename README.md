@@ -82,16 +82,18 @@ Classes that can be turned on or off
 ### Preprocessing Parameters
 !!! Refactor to make more user friendly !!!
 ##### Process dataframe 1
-- pound_filepath:  Ex.('data/raw/pound_river_10yr_cfs_data.txt')
-     - file path to the raw data file
-- pound_save_filepath:  Ex.('data/pound.csv')
-     - file path to save the processed data file
-- pound_list_col_del: Ex.(['agency_cd', 'site_no', 'tz_cd', '147720_00060_cd'])
+- raw_filename1:  Ex.('pound_river_10yr_cfs_data.txt')
+     - file name of the raw data file, which is located in data/raw
+- save_filename1:  Ex.('pound.csv')
+     - preferred file name for the processed data file, will be saved to data/
+- list_col_del1: Ex.(['agency_cd', 'site_no', 'tz_cd', '147720_00060_cd'])
      - A list, [], of strings, '', containing any column names to be removed from the dataframe, leave blank if no columns need to be removed
 - pound_dict_col_rename: Ex.({"datetime": "Date", "147720_00060": "Flow"})
      - A dictionary, {'key':'value'}, of columns to be renamed, passing the original name as the key and the desired name as the value, both being strings, ''
 ##### Process other dataframes if any
 - same parameters as dataframe 1
+- leave parameters blank if only 1 raw data file is used
+- if more than 2 files need to be merged, either run the first 2, then use that merged file to merge with the 3rd, etc... or the other option is to modify the code to contain a 3rd merge, but could be more time consuming.
 
 ##### Merge dataframes
 - dict_col: Ex({"Flow_x": "Pound_Flow", "Flow_y": "Rf_Flow"})
