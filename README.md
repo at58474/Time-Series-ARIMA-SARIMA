@@ -88,7 +88,7 @@ Classes that can be turned on or off
      - preferred file name for the processed data file, will be saved to data/
 - list_col_del1: Ex.(['agency_cd', 'site_no', 'tz_cd', '147720_00060_cd'])
      - A list, [], of strings, '', containing any column names to be removed from the dataframe, leave blank if no columns need to be removed
-- pound_dict_col_rename: Ex.({"datetime": "Date", "147720_00060": "Flow"})
+- dict_col_rename1: Ex.({"datetime": "Date", "147720_00060": "Flow"})
      - A dictionary, {'key':'value'}, of columns to be renamed, passing the original name as the key and the desired name as the value, both being strings, ''
 ##### Process other dataframes if any
 - same parameters as dataframe 1
