@@ -15,7 +15,6 @@ from sklearn.metrics import mean_squared_error
 # Jarque-Bera goodness-of-fit test
 from statsmodels.stats.stattools import jarque_bera
 # For plot
-import matplotlib.pyplot as plt
 # probplot()
 from scipy import stats
 import statsmodels.api as sm
