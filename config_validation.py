@@ -59,7 +59,8 @@ class ValidateInput:
 
     @staticmethod
     def check_if_list_of_tuples(list_of_tuples):
-        return isinstance(list_of_tuples, list) and all(isinstance(item, tuple) for item in list_of_tuples)
+        # checks if list_of_tuples is a list, then checks if each item in the list is a tuple, then checks if each item in the tuple is an integer
+        return isinstance(list_of_tuples, list) and all(isinstance(item, tuple) and all(isinstance(sub_item, int) for sub_item in item) for item in list_of_tuples)
 
 
 # Class Instances
@@ -161,8 +162,36 @@ if run_model_fitting:
     # testing_set_size
     assert isinstance(testing_set_size, int) and testing_set_size > 0, 'testing_set_size must be an int greater than 0'
     # order_list_arima
+    assert test_is_list_of_tuples.check_if_list_of_tuples(order_list_arima), 'order_list_arima must be a list of tuples of integers, see readme for proper format'
+    # order_list_sarima
+    assert test_is_list_of_tuples.check_if_list_of_tuples(order_list_sarima), 'order_list_sarima must be a list of tuples of integers, see readme for proper format'
 
+'''
+CROSS VALIDATION PARAMETERS
+'''
+if run_cross_validation:
+    # groups
+    assert isinstance(groups, int) and groups > 0, 'groups must be an int greater than 0'
+    # testing_set_size_cv
+    assert isinstance(testing_set_size_cv, int) and testing_set_size_cv > 0, 'testing_set_size_cv must be an int greater than 0'
+    # keys
+    assert test_is_list_of_strings.check_if_list_of_strings(keys), 'keys is not a list or does not contain only strings'
+    # order_list_trun_arima
+    assert test_is_list_of_tuples.check_if_list_of_tuples(order_list_trun_arima), 'order_list_trun_arima must be a list of tuples of integers, see readme for proper format'
+    # order_list_trun_sarima
+    assert test_is_list_of_tuples.check_if_list_of_tuples(order_list_trun_sarima), 'order_list_trun_sarima must be a list of tuples of integers, see readme for proper format'
 
+'''
+AUTO ARIMA PARAMETERS
+'''
+if run_auto_arima:
+    # key
+    assert test_is_list_of_strings.check_if_list_of_strings(key), 'key is not a list or does not contain only strings'
+    # p_min, p_max, d_min, d_max, q_min, q_max, P_min, P_max, D_min, D_max, Q_min, Q_max
+    dict_of_ints = {'p_min': p_min, 'p_max': p_max, 'd_min': d_min, 'd_max': d_max, 'q_min': q_min, 'q_max': q_max,
+                 'P_min': P_min, 'P_max': P_max, 'D_min': D_min, 'D_max': D_max, 'Q_min': Q_min, 'Q_max': Q_max}
+    for key in dict_of_ints:
+        assert isinstance(dict_of_ints[key], int), f'{key} must be an integer'
 
 
 
