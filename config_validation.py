@@ -77,6 +77,7 @@ test_list_of_resamples = ValidateInput(None, r'\d+(min\b|H\b|D\b|W\b|M\b)')
 test_is_list_of_ints = ValidateInput()
 test_is_list_of_tuples = ValidateInput()
 
+# Assertions
 '''
 SETTINGS
 '''
@@ -150,6 +151,10 @@ CREATE DATAFRAMES PARAMETERS
 assert test_list_of_resamples.check_if_list_of_resamples(frequency_list), 'frequency_list is not a list of resample intervals, see readme for proper format'
 # row_cap
 assert isinstance(row_cap, int) and row_cap > 0, 'row_cap must be an int greater than 0'
+
+'''
+CREATE DATAFRAMES PARAMETERS
+'''
 # lags
 assert isinstance(lags, int) and lags > 0, 'lags must be an int greater than 0'
 # seasonal_period
@@ -192,17 +197,5 @@ if run_auto_arima:
                  'P_min': P_min, 'P_max': P_max, 'D_min': D_min, 'D_max': D_max, 'Q_min': Q_min, 'Q_max': Q_max}
     for key in dict_of_ints:
         assert isinstance(dict_of_ints[key], int), f'{key} must be an integer'
-
-
-
-# Check if file path exists and/or is in the correct format, for windows, linux, max
-# Check if list of strings
-# Check if dictionary where key:value pairs are both strings
-# Check if list of resample method strings
-# Check if int
-# Check if list of ints
-'''
-For seasonal_parameter, have them enter the season and automatically generate the numbers based on the resample time interval
-'''
-# Check if list of tuples
-# Check if list of exactly 1 integer
+    # m
+    assert test_is_list_of_ints.check_if_list_of_ints(m), 'm must be a list of integers'
