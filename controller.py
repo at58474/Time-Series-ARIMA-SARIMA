@@ -18,11 +18,19 @@ if delete_files:
 '''
 PREPROCESSING
 '''
+pound_filepath = 'data/raw/' + raw_filename1
+pound_save_filepath = 'data/' + save_filename1
 arima_pre = Preprocessing(start_date, end_date, delimiter, date_col, data_freq, impute_method)
-df_pound = arima_pre.preprocessing(pound_filepath, pound_save_filepath, pound_list_col_del, pound_dict_col_rename)
-df_rf = arima_pre.preprocessing(rf_filepath, rf_save_filepath, rf_list_col_del, rf_dict_col_rename)
-df = arima_pre.merge_dfs(df_pound, df_rf, dict_col, new_col_name, merged_filepath)
+df_pound = arima_pre.preprocessing(pound_filepath, pound_save_filepath, list_col_del1, dict_col_rename1)
 
+if process_and_merge_2_raw_files:
+    rf_filepath = 'data/raw/' + raw_filename2
+    rf_save_filepath = 'data/' + save_filename2
+    merged_filepath = 'data/' + merged_filepath
+    df_rf = arima_pre.preprocessing(rf_filepath, rf_save_filepath, list_col_del2, dict_col_rename2)
+    df = arima_pre.merge_dfs(df_pound, df_rf, dict_col, new_col_name, merged_filepath)
+else:
+    df = df_pound
 '''
 CREATE DATAFRAMES
 '''

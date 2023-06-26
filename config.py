@@ -2,9 +2,9 @@
 SETTINGS
 '''
 # Choose which modules to run
-run_model_fitting = False
-run_diagnostics = False
-run_cross_validation = False
+run_model_fitting = True
+run_diagnostics = True
+run_cross_validation = True
 run_auto_arima = True
 
 # Set model_type to ARIMA or SARIMA, depending on which needs to be used
@@ -39,22 +39,28 @@ col_name = 'Flow'
 '''
 PREPROCESSING PARAMETERS
 '''
-# Process Pound river data
-pound_filepath = 'data/raw/pound_river_10yr_cfs_data.txt'
-pound_save_filepath = 'data/pound.csv'
-pound_list_col_del = ['agency_cd', 'site_no', 'tz_cd', '147720_00060_cd']
-pound_dict_col_rename = {"datetime": "Date", "147720_00060": "Flow"}
+# Refer to readme before filling in this section
+process_and_merge_2_raw_files = True
+# Process first raw file
+# The file should be located in data/raw/
+raw_filename1 = 'pound_river_10yr_cfs_data.txt'
+save_filename1 = 'pound.csv'
 
-# Process Russell Fork river data
-rf_filepath = 'data/raw/russell_fork_10yr_cfs_data.txt'
-rf_save_filepath = 'data/russellfork.csv'
-rf_list_col_del = ['agency_cd', 'site_no', 'tz_cd', '147710_00060_cd']
-rf_dict_col_rename = {"datetime": "Date", "147710_00060": "Flow"}
+list_col_del1 = ['agency_cd', 'site_no', 'tz_cd', '147720_00060_cd']
+dict_col_rename1 = {"datetime": "Date", "147720_00060": "Flow"}
 
-# Merge Pound and Russell Fork river data
+# Process second raw file
+raw_filename2 = 'russell_fork_10yr_cfs_data.txt'
+save_filename2 = 'russellfork.csv'
+
+list_col_del2 = ['agency_cd', 'site_no', 'tz_cd', '147710_00060_cd']
+dict_col_rename2 = {"datetime": "Date", "147710_00060": "Flow"}
+
+# Merge fist and second dataframes into 1 dataframe
 dict_col = {"Flow_x": "Pound_Flow", "Flow_y": "Rf_Flow"}
 new_col_name = 'Flow'
-merged_filepath = 'data/rfg.csv'
+
+merged_filepath = 'rfg.csv'
 
 '''
 CREATE DATAFRAMES PARAMETERS
