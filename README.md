@@ -82,16 +82,20 @@ Classes that can be turned on or off
 ### Preprocessing Parameters
 !!! Refactor to make more user friendly !!!
 ##### Process dataframe 1
-- pound_filepath:  Ex.('data/raw/pound_river_10yr_cfs_data.txt')
-     - file path to the raw data file
-- pound_save_filepath:  Ex.('data/pound.csv')
-     - file path to save the processed data file
-- pound_list_col_del: Ex.(['agency_cd', 'site_no', 'tz_cd', '147720_00060_cd'])
+- process_and_merge_2_raw_files: (True, False)
+     - Set this parameter to True if 2 raw files need to be processed and combined, if only 1 file then set to False
+- raw_filename1:  Ex.('pound_river_10yr_cfs_data.txt')
+     - file name of the raw data file, which is located in data/raw
+- save_filename1:  Ex.('pound.csv')
+     - preferred file name for the processed data file, will be saved to data/
+- list_col_del1: Ex.(['agency_cd', 'site_no', 'tz_cd', '147720_00060_cd'])
      - A list, [], of strings, '', containing any column names to be removed from the dataframe, leave blank if no columns need to be removed
-- pound_dict_col_rename: Ex.({"datetime": "Date", "147720_00060": "Flow"})
+- dict_col_rename1: Ex.({"datetime": "Date", "147720_00060": "Flow"})
      - A dictionary, {'key':'value'}, of columns to be renamed, passing the original name as the key and the desired name as the value, both being strings, ''
 ##### Process other dataframes if any
-- same parameters as dataframe 1
+- Same parameters as dataframe 1
+- Leave parameters blank if only 1 raw data file is used
+- If more than 2 files need to be merged, set run_model_fitting, run_diagnostics, run_cross_validation, and run_auto_arima to False, then run with the first 2 raw files, then move the merged file to data/raw and update the raw_filename1 parameter, then run again with the 3rd file.
 
 ##### Merge dataframes
 - dict_col: Ex({"Flow_x": "Pound_Flow", "Flow_y": "Rf_Flow"})
